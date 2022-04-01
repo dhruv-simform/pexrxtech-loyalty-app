@@ -1,0 +1,39 @@
+
+
+<div class="jumbotron jumbotron-events" >
+  <div class="container" >
+    <div style="margin-top: 100px">
+      <div class="page-header text-center">
+        <p>
+            <h3>All Rewards</h3>
+        </p>
+      </div>
+      <div class="text-center">
+        <h4>
+        </h4>
+		  </div>
+      <table class="table">
+          <thead>
+              <tr>
+              <th scope="col">Id</th>
+              <th scope="col">Name</th>
+              <th scope="col">Description</th>
+              <th scope="col">created at</th>
+              <th scope="col">updated at</th>
+              </tr>
+          </thead>
+          <tbody>
+            <% @rewards.each do |reward|%>
+              <tr>
+                  <th scope="row"><%= reward.id %></th>
+                  <td><%= reward.name %></td>
+                  <td><%= reward.description %></td>
+                  <td><%= reward.created_at %></td>
+                  <td><%= reward.updated_at %></td>
+              </tr>
+            <% end %>
+          </tbody>
+      </table>
+  	</div>
+  </div>
+</div>

@@ -1,0 +1,40 @@
+
+
+<div class="jumbotron jumbotron-events" >
+  <div class="container" >
+    <div style="margin-top: 100px">
+      <div class="page-header text-center">
+        <p>
+            <h3>All Transactions</h3>
+        </p>
+      </div>
+      <div class="text-center">
+        <h4>
+          <%= link_to "Create Transaction", new_transaction_path, class: "btn btn-info" %>
+        </h4>
+		  </div>
+      <table class="table">
+          <thead>
+              <tr>
+              <th scope="col">Id</th>
+              <th scope="col">Transaction   Date</th>
+              <th scope="col">Latitude</th>
+              <th scope="col">Longitude</th>
+              <th scope="col">Amount</th>
+              </tr>
+          </thead>
+          <tbody>
+            <% @transactions.each do |transaction|%>
+              <tr>
+                  <th scope="row"><%= transaction.id %></th>
+                  <td><%= transaction.transaction_date %></td>
+                  <td><%= transaction.latitude %></td>
+                  <td><%= transaction.longitude %></td>
+                  <td><%= transaction.amount %></td>
+              </tr>
+            <% end %>
+          </tbody>
+      </table>
+  	</div>
+  </div>
+</div>
