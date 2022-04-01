@@ -1,0 +1,8 @@
+# frozen_string_literal: true
+
+# add user to the transaction table
+class AddUserToTransactions < ActiveRecord::Migration[6.1]
+  def change
+    add_reference :transactions, :user, null: false, foreign_key: true
+  end
+end
