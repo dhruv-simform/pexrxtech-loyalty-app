@@ -10,10 +10,8 @@ class TransactionsController < ApplicationController
     @transaction = Transaction.new
   end
 
-  # GET /event_bookings/1/edit
   def edit; end
 
-  # POST /event_bookings or /event_bookings.json
   def create
     @transaction = Transaction.new(transaction_params)
     @transaction.user_id = current_user.id
@@ -27,7 +25,6 @@ class TransactionsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /event_bookings/1 or /event_bookings/1.json
   private
 
   def transaction_params

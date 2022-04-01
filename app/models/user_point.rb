@@ -7,7 +7,4 @@ class UserPoint < ApplicationRecord
 
   # Associations
   belongs_to :user, optional: true
-
-  # Validations
-  
 end
