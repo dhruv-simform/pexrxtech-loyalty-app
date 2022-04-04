@@ -16,7 +16,9 @@ class Transaction < ApplicationRecord
   after_create :generate_points, :update_customer_loyalty_tier
 
   def generate_points
-    earned_points = calculate_earned_points
+    earned_points = calculate_earned_points[0]
+    response = calculate_earned_points[1]
+
     UserPoint.create(
       point_earned: earned_points,
       location: response.data['address']['country'],
@@ -30,12 +32,12 @@ class Transaction < ApplicationRecord
     response = Geocoder.search(latitude_longitude).first
     if response.data['error'].present?
       errors.add(:base, response.data['error'])
-    elsif amount.to_i >= 100
-      self.amount /= 10
-      earned_amount = (self.amount / 10).round * 10
+    elsif self.amount.to_i >= 100
+      amount = self.amount / 10
+      earned_amount = (amount / 10).round * 10
       earned_amount *= 2 unless response.data['address']['country'] == DEFAULT_COUNTRY
     end
-    earned_amount
+    [earned_amount, response]
   end
 
   # Update customer loyalty tier based on the earning points
@@ -44,9 +46,9 @@ class Transaction < ApplicationRecord
     if total_earned_point > 1000 && total_earned_point < 5000
       reward = Reward.find_by(name: 'Airport Lounge Access Reward')
       user.user_rewards.create(reward_id: reward.id)
-      user.update!(loyalty_tier: 'gold')
+      user.update!(loyalty_tier: 1)
     elsif total_earned_point > 5000
-      user.update!(loyalty_tier: 'platinum')
+      user.update!(loyalty_tier: 2)
     end
   end
 end
