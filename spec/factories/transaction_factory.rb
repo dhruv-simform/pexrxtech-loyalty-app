@@ -5,6 +5,7 @@ require 'faker'
 FactoryBot.define do
   factory :transaction do
     amount { Faker::Number.number(digits: 3) }
+    transaction_date { DateTime.now }
     user
   end
 

@@ -12,14 +12,15 @@ class RewardCreator
 
   # Providing free coffee reward to user on their birthday
   def user_birthday
-    users = user.user_birthday
-    @user_reward = User.birthday_this_month(user) if users
+    @user_reward = birthday_this_month(User.current_birthday_users) if User.current_birthday_users.present?
   end
 
   # Giving free movie ticket reward to user when points earned is greater than 1000
   def user_spent_more_then_1000
     User.all.each do |user|
       first_transaction_date = user.transactions.first&.transaction_date
+      return unless first_transaction_date.present?
+
       @points = UserPoint.within_60_days_after_first_transaction(user.id, first_transaction_date,
                                                                  first_transaction_date + 59.days)
       @user_reward = create_user_reward(user.id, 'Free Movie ticket') if points_earned > 1000
@@ -40,7 +41,7 @@ class RewardCreator
     end
   end
 
-  def self.birthday_this_month(users)
+  def birthday_this_month(users)
     users.each do |user|
       @user_reward = create_user_reward(user.id, 'Free Coffee')
     end

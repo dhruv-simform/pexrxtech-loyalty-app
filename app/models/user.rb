@@ -12,5 +12,7 @@ class User < ApplicationRecord
   has_many :user_rewards, dependent: :destroy
   has_many :rewards, through: :user_rewards
 
- 
+  enum loyalty_tier: { standard: 0, gold: 1, platinum: 2 }
+
+  scope :current_birthday_users, -> { where('extract(month from birthday) = ?', Date.today.month) }
 end

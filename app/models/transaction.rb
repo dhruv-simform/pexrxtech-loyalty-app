@@ -32,7 +32,7 @@ class Transaction < ApplicationRecord
     response = Geocoder.search(latitude_longitude).first
     if response.data['error'].present?
       errors.add(:base, response.data['error'])
-    elsif self.amount.to_i >= 100
+    elsif amount.to_i >= 100
       amount = self.amount / 10
       earned_amount = (amount / 10).round * 10
       earned_amount *= 2 unless response.data['address']['country'] == DEFAULT_COUNTRY

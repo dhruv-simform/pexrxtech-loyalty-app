@@ -24,19 +24,19 @@ RSpec.describe Transaction, type: :model do
 
     it 'default tier should be standard' do
       transaction.update_customer_loyalty_tier
-      expect(transaction.user.loyalty_tier).to eq(0)
+      expect(transaction.user.loyalty_tier).to eq('standard')
     end
 
     it 'should be updated to gold tier' do
       transaction.user.user_points.first.update(point_earned: 1100)
       transaction.update_customer_loyalty_tier
-      expect(transaction.user.loyalty_tier).to eq(1)
+      expect(transaction.user.loyalty_tier).to eq('gold')
     end
 
     it 'should be updated to platinum tier' do
       transaction.user.user_points.first.update(point_earned: 5100)
       transaction.update_customer_loyalty_tier
-      expect(transaction.user.loyalty_tier).to eq(2)
+      expect(transaction.user.loyalty_tier).to eq('platinum')
     end
   end
 end
